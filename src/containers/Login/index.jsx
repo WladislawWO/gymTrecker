@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import {Actions} from 'react-native-router-flux'
 
 export default class App extends React.Component {
   state = {
@@ -22,12 +23,11 @@ export default class App extends React.Component {
             placeholder ="Password"
           />
           </View>
-    
           <TouchableOpacity style={styles.loginBtn}>
-            <Text style={styles.loginText}>Заходь Нігер</Text>
+            <Text style={styles.loginText} onPress={() => Actions.home()}>Заходь Нігер</Text>            
           </TouchableOpacity>
           <TouchableOpacity>
-            <Text style={styles.loginText}>Sign Up</Text>
+              <Text style={styles.loginText} onPress={() => Actions.regist()}>Sign Up</Text>
           </TouchableOpacity>
       </View>
     );
