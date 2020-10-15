@@ -3,6 +3,7 @@ import Login from './Login';
 import {Router, Stack, Scene} from 'react-native-router-flux'
 import Home from './Home'
 import RegistrationForm from './RegistrationForm'
+import Calendar from '../components/calendar';
 // import CreateNewTrain from './CreateNewTrain'
 
 export default function Pages() {
@@ -13,7 +14,7 @@ export default function Pages() {
         <Scene key="home" component={Home} title="Home" />
         <Scene key="regist" component={RegistrationForm} title="Registration" />
         {/* <Scene key="create" component={CreateNewTrain} title="Create new train" /> */}
-
+        <Scene key="calendar" component={Calendar} title="Calendar" />
       </Stack>
     </Router>
   );

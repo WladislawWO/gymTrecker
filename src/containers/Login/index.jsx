@@ -24,7 +24,7 @@ export default class App extends React.Component {
           />
           </View>
           <TouchableOpacity style={styles.loginBtn}>
-            <Text style={styles.loginText} onPress={() => Actions.home()}>Заходь Нігер</Text>            
+            <Text style={styles.loginText} onPress={() => Actions.calendar()}>Заходь Нігер</Text>            
           </TouchableOpacity>
           <TouchableOpacity>
               <Text style={styles.loginText} onPress={() => Actions.regist()}>Sign Up</Text>
