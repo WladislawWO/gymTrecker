@@ -10,9 +10,8 @@ const App = () => {
   const onSighInClick = () => {
     Keyboard.dismiss();
     Actions.main();
-    console.log("SIGN_IN");
   }
-  const canSingIn = true; //email && password;
+  const canSingIn = email && password;
 
   return (
     <View style={styles.container}>

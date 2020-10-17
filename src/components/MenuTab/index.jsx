@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
 });
 
 const MenuTab = props => {
-  console.log(props)
   let textColor = props.focused ? '#22ad5c' : '#999999';
   return (
     <View style={styles.tabs}>
