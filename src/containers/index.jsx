@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     zIndex: 0
   },
   padding: {
-    paddingTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight / 2,
   },
   tabBar: {
     height: 60,

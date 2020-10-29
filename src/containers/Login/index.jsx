@@ -1,15 +1,42 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, TextInput, Keyboard, Alert } from 'react-native';
 import CustomText from '../../components/CustomText';
 import { Actions } from 'react-native-router-flux';
+import api from '../../utils/api';
+import { AsyncStorage } from 'react-native';
 
 const App = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSighInClick = () => {
     Keyboard.dismiss();
-    Actions.main();
+    setIsLoading(true);
+    api.post('/users/login/', {
+      email,
+      password,
+    }).then(res => {
+      setIsLoading(false);
+      if (res.data.status === 'error') {
+        Alert.alert(
+          "Oops!",
+          res.data.error,
+          [
+            { text: "TRY AGAIN", onPress: () => {} }
+          ],
+          { cancelable: true }
+        );
+      } else {
+        AsyncStorage.setItem('token', res.data.token);
+        Actions.main();
+      }
+      console.log('Good', res.data);
+    }, error => {
+      setIsLoading(false);
+      console.log('Error', error);
+    })
+    //Actions.main();
   }
   const canSingIn = email && password;
 
@@ -44,7 +71,9 @@ const App = () => {
         onPress={onSighInClick}
         disabled={!canSingIn}
       >
-        <CustomText style={styles.textButton} weight="900">SIGN IN</CustomText>
+        <CustomText style={styles.textButton} weight="900">
+          {isLoading ? 'SIGNING IN..' : 'SIGN IN'}
+        </CustomText>
       </TouchableOpacity>
       <TouchableOpacity>
         <CustomText style={styles.clearButton} weight="900">SIGN UP</CustomText>
@@ -97,13 +126,13 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: "#22ad5c",
-    textAlign: 'center'
+    textAlign: 'center',
   },
   clearButton: {
     color: "white",
     marginTop: 10,
     marginBottom: 20
-  }
+  },
 });
 
 export default App;
