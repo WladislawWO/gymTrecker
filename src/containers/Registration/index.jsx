@@ -1,36 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity, TextInput, Keyboard, Alert } from 'react-native';
 import CustomText from '../../components/CustomText';
 import { Actions } from 'react-native-router-flux';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../redux/actions/user';
+import { registration } from '../../redux/actions/user';
 import { userSelector } from '../../redux/selectors/user';
 
-const Login = () => {
+const Registration = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { status, user } = useSelector(userSelector);
   const dispatch = useDispatch();
 
   const onSighInClick = () => {
-    dispatch(login({
+    dispatch(registration({
+      username,
       email,
       password
     }));
   };
-
   useEffect(() => {
-    if (status === 'success' && user) {
-      Actions.main();
+    if (status === 'error' && !user) {
+      Actions.main()
     }
   }, [status, user]);
 
-  const canSingIn = email && password;
+  const canSingIn = email && password && username;
 
   return (
     <View style={styles.container}>
       <CustomText style={styles.logoFirst} weight="900">GYM</CustomText>
       <CustomText style={styles.logoSecond} weight="700">TRECKER</CustomText>
+      <CustomText style={styles.title} weight="500">Registration</CustomText>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Username"
+          autoCompleteType="username"
+          value={username}
+          onChange={e => setUsername(e.nativeEvent.text)}
+        />
+      </View>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.inputText}
@@ -50,20 +61,17 @@ const Login = () => {
           onChange={e => setPassword(e.nativeEvent.text)}
         />
       </View>
-      <TouchableOpacity>
-        <CustomText style={styles.clearButton} weight="900">FORGOT YOUR PASSWORD?</CustomText>
-      </TouchableOpacity>
       <TouchableOpacity
         style={[styles.inputContainer, !canSingIn && styles.disabledButton]}
         onPress={onSighInClick}
         disabled={!canSingIn}
       >
         <CustomText style={styles.textButton} weight="900">
-          {status === 'loading' ? 'SIGNING IN..' : 'SIGN IN'}
+          {status === 'loading' ? 'SIGNING UP..' : 'SIGN UP'}
         </CustomText>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => Actions.registration()}>
-        <CustomText style={styles.clearButton} weight="900">SIGN UP</CustomText>
+      <TouchableOpacity onPress={() => Actions.login()}>
+        <CustomText style={styles.clearButton} weight="900">GO BACK</CustomText>
       </TouchableOpacity>
     </View>
   );
@@ -79,6 +87,11 @@ const styles = StyleSheet.create({
   logoFirst: {
     fontSize: 80,
     color: 'white',
+  },
+  title: {
+    color: '#fff',
+    fontSize: 20,
+    marginBottom: 20
   },
   logoSecond: {
     fontSize: 40,
@@ -122,4 +135,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default Registration;

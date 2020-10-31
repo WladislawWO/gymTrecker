@@ -4,14 +4,12 @@ import reducer from './reducers';
 
 const middleware = getDefaultMiddleware();
 
-if (process.env.NODE_ENV !== 'production') {
-  middleware.push(logger);
-}
+middleware.push(logger);
 
 const store = configureStore({
   reducer,
   middleware,
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: true,
 });
 
 export default store;

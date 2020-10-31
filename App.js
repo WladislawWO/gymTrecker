@@ -4,6 +4,7 @@ import Pages from './src/containers';
 import store from './src/redux/store';
 import { AppLoading } from 'expo';
 import { useFonts } from 'expo-font';
+import { AsyncStorage } from 'react-native';
 
 export default function App () {
   let [fontsLoaded] = useFonts({
