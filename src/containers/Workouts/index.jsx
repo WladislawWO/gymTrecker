@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import CustomText from '../../components/CustomText';
 import { Agenda } from 'react-native-calendars';
-
+import { Actions } from 'react-native-router-flux';
+import { useSelector } from 'react-redux';
+import { userSelector } from '../../redux/selectors/user';
 const timeToString = (time) => {
   const date = new Date(time);
   return date.toISOString().split('T')[0];
@@ -10,6 +12,12 @@ const timeToString = (time) => {
 
 const Workouts = () => {
   const [items, setItems] = useState([]);
+  const { user } = useSelector(userSelector);
+  useEffect(() => {
+    if(!user) {
+      Actions.login();
+    }
+  }, [user]);
 
   const loadItems = (day) => {
     for (let i = -15; i < 85; i++) {
@@ -54,7 +62,7 @@ const Workouts = () => {
         />
         <TouchableOpacity
           style={styles.inputContainer}
-          onPress={() => console.log("NEW_TRAIN")}
+          onPress={()=> Actions.login()}
         >
           <CustomText weight="700" style={styles.buttonText}>Start training</CustomText>
         </TouchableOpacity>

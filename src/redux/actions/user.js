@@ -51,15 +51,15 @@ export const login = createAsyncThunk('user/login', async (data) => {
 export const logout = createAsyncThunk('user/logout', async () => {
   try {
     await api.post('users/logout/');
-    AsyncStorage.removeItem('token');
+    await AsyncStorage.removeItem('token');
     Actions.login();
     return { 
       token: null,
       user: null,
-      status: 'success'
+      status: null
     };
   } catch (e) {
-    errorAlert('Error');
+    Actions.login();
     return null;
   }
 });

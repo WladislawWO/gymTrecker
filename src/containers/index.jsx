@@ -42,7 +42,7 @@ export default function Pages() {
         style={styles.cover}
       />
       <Router sceneStyle={[styles.cover, styles.padding]}>
-        <Stack key="root">
+        <Scene key="root">
           <Scene key="login" component={Login} hideNavBar={true}/>
           <Scene key="registration" component={Registration} hideNavBar={true} />
           <Tabs
@@ -52,15 +52,14 @@ export default function Pages() {
             tabBarPosition='bottom'
             tabBarStyle={styles.tabBar}
             showLabel={false}
-            legacy={true} swipeEnabled={true} tabBarPosition={'bottom'}
             initial={isLogined}
             type={ActionConst.RESET}
           >
-            <Scene key="workouts" component={Workouts} hideNavBar={true} title="Workouts" icon={MenuTab} type={ActionConst.RESET}/>
+            <Scene key="workouts" component={Workouts} hideNavBar={true} title="Workouts" icon={MenuTab} />
             <Scene key="statistics" component={Statistics} hideNavBar={true} title="Statistics" icon={MenuTab} />
             <Scene key="profile" component={Profile} hideNavBar={true} title="Profile" icon={MenuTab} />
           </Tabs>
-        </Stack>
+        </Scene>
       </Router>
     </View>
   );

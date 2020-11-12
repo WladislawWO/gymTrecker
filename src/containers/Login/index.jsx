@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, TouchableOpacity, TextInput, Keyboard, Alert } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, TextInput, Keyboard, Alert, AsyncStorage } from 'react-native';
 import CustomText from '../../components/CustomText';
 import { Actions } from 'react-native-router-flux';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,9 +20,15 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (status === 'success' && user) {
-      Actions.main();
+    const redirect = async () => {
+      if (status === 'success' && user) {
+        const token = await AsyncStorage.getItem('token');
+        if (token) {
+          Actions.main();
+        }
+      }
     }
+    redirect();
   }, [status, user]);
 
   const canSingIn = email && password;

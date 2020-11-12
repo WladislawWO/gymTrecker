@@ -9,6 +9,7 @@
     "postinstall": "rndebugger-open --open"
   },
   "dependencies": {
+    "@react-native-community/netinfo": "5.9.6",
     "@reduxjs/toolkit": "^1.4.0",
     "axios": "^0.20.0",
     "expo": "~39.0.2",

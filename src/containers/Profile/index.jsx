@@ -6,10 +6,12 @@ import globalStyles from '../../styles/globalStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from '../../redux/selectors/user';
 import { logout } from '../../redux/actions/user';
+import { useNetInfo } from "@react-native-community/netinfo";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const { user } = useSelector(userSelector);
+  const netInfo = useNetInfo();
 
   const onLogoutClick = () => {
     dispatch(logout());
@@ -21,7 +23,10 @@ const Profile = () => {
         <AvatarIcon fill="#22ad5c" width="50" height="50" />
       </View>
       <CustomText style={[styles.header, styles.welcome]} weight="900">Hi, {user?.username}</CustomText>
-      <CustomText style={styles.header} weight="700">Soon you will able to manage your profile and other fun stuff, right here.</CustomText>
+      <CustomText style={styles.header} weight="700">Soon you will able to manage your profile and other fun stuff, right here.
+      Type: {netInfo.type}
+      Is Connected? {netInfo.isConnected.toString()}
+      </CustomText>
       <TouchableOpacity style={globalStyles.outlineButton}>
         <CustomText style={globalStyles.outlineButtonText} weight="900">Edit profile</CustomText>
       </TouchableOpacity>
